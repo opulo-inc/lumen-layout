@@ -23,7 +23,7 @@ function calculate() {
     // then we fill non-prio into strip feeders
     
     var slotSolve = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-    var stripSolve = [];
+    var uSolve = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
     var slotCount = 50;
 
@@ -154,14 +154,94 @@ function calculate() {
 
 
     // fill remaining into strips
+    // ok, so we'll need a key of some sort deciding how many tapes of each width fit into what's effectively 1u of plate space
+    // so, for a given 38mm 1u spacing, we can fit one 24mm, two 16, three 12, and four 8.
+    // knowing how many U are available, we start assinging non-pro feeders to trays.
+    // the trick is that before we can assign four 8mm tapes to a U, we need to assign an 8mm feeder to a U.
+    // if there are only 3 8mm remaining, we're nuking 1/4 of a U.
+    // we should optimize for how many unique feeders we can fit in each U.
+    // so, start with 8, and if there are still 4, assign them. if there are three, assign them.
+    // if there are two, check if there are three 12s, because that's a more efficient use of 1U.
 
+    // we start with 8 because it's the most efficient at reducing total unique part count
 
+    var partsPerU = [4, 3, 2, 1];
+    var uIndex = 0;
 
+    // for each tape width type
+    for (let width = 0; width<nonPriority.length; width++){
+        // if we still have another width coming after to optimize against
+        console.log("about to process width: " + width);
+        if(width < nonPriority.length - 1){
+            // while there are still components of this width to allocate
+            console.log("amount of tapes remaining of current width: " + nonPriority[width]);
+            while(nonPriority[width] > 0){
+                // if the most that can be allocated of the current feeder width is greater or equal to that of the next width
+                console.log("current feeder width: " + width);
+                console.log("best allocation of that width: " + Math.min(partsPerU[width], nonPriority[width]));
+                console.log("best allocation of next width: " + Math.min(partsPerU[width+1], nonPriority[width+1]));
+                if(Math.min(partsPerU[width], nonPriority[width]) >= Math.min(partsPerU[width+1], nonPriority[width+1])){
+                    //if there are U left to allocate
+                    if(uIndex < uSolve.length){
+                        // marking down that we decided to allocate a U to the current
+                        uSolve[uIndex] = width;
+                        uIndex = uIndex + 1
+                        // removing the amount of parts allocated
+                        nonPriority[width] = nonPriority[width] - Math.min(partsPerU[width], nonPriority[width]);
+                    }
+                    else{
+                        break;
+                    }
+
+                }
+                // if next width feeder is a better use of U
+                else{
+                    if(uIndex < uSolve.length){
+                        // marking down that we decided to allocate a U to the current
+                        uSolve[uIndex] = width+1;
+                        uIndex = uIndex + 1;
+                        // removing the amount of parts allocated
+                        nonPriority[width+1] = nonPriority[width+1] - Math.min(partsPerU[width+1], nonPriority[width+1]);
+                    }
+                    else{
+                        break;
+                    }
+
+                }
+
+            }
+        }
+        //just allocate the rest of what you got to remaining U, nothing left to optimize
+        else{
+            //while there are still feeders to allocate
+            while(nonPriority[width] > 0){
+                if(uIndex < uSolve.length){
+                    // marking down that we decided to allocate a U to the current
+                    uSolve[uIndex] = width;
+                    uIndex = uIndex + 1
+                    // removing the amount of parts allocated
+                    nonPriority[width] = nonPriority[width] - Math.min(partsPerU[width], nonPriority[width]);
+                }
+            }
+        }
+
+    }
+
+    
+    console.log("final usolve: " + uSolve)
+    console.log("remaining nonprio: " + nonPriority)
 
 
     //draw on canvas
     var c = document.getElementById("canvas1");
     var ctx = c.getContext("2d");
+
+    //clearing canvas
+    ctx.fillStyle = "#EEE";
+    ctx.fillRect(0, 0, 410, 400);
+
+
+
     var startingX = 6;
 
     var xPos = startingX;
@@ -170,8 +250,9 @@ function calculate() {
     var feederHeight = 60;
     var spacing = 2;
 
+// DRAWING FEEDERS
 
-    for(let i = 0; i < slotCount; i++){
+    for(let i = 0; i < slotSolve.length; i++){
         if(i == 25){
             yPos = 6;
             xPos = startingX;
@@ -195,22 +276,78 @@ function calculate() {
         }
         else if(slotSolve[i] == 2){
             ctx.fillStyle = "#33FF33";
-            ctx.fillRect(xPos, yPos, feederWidth*2, feederHeight);
+            ctx.fillRect(xPos, yPos, (feederWidth*2)+spacing, feederHeight);
 
-            xPos = xPos + feederWidth*2 + spacing;
+            xPos = xPos + feederWidth*2 + spacing*2;
 
 
         }
         else if(slotSolve[i] == 3){
             ctx.fillStyle = "#3333FF";
-            ctx.fillRect(xPos, yPos, feederWidth*2, feederHeight);
+            ctx.fillRect(xPos, yPos, (feederWidth*2)+spacing, feederHeight);
 
-            xPos = xPos + feederWidth*2 + spacing;
+            xPos = xPos + feederWidth*2 + spacing*2;
 
 
         }
         
         
     }
+
+// DRAWING STRIPS
+
+    var xPos = startingX;
+    var yPos = 200;
+    var feederWidth = 30;
+    var feederHeight = 50;
+    var spacing = 2;
+
+    for(let i = 0; i <= uSolve.length; i++){
+
+    // not sure if we'll do a second row    
+        // if(i == 25){
+        //     yPos = 6;
+        //     xPos = startingX;
+        // }
+
+        //if an 8mm feeder
+        if(uSolve[i] == 0){
+            ctx.fillStyle = "#DAA520";
+            ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
+
+            xPos = xPos + feederWidth + spacing;
+
+
+        }
+        else if(uSolve[i] == 1){
+            ctx.fillStyle = "#FF3333";
+            ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
+
+            xPos = xPos + feederWidth + spacing;
+
+        }
+        else if(uSolve[i] == 2){
+            ctx.fillStyle = "#33FF33";
+            ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
+
+            xPos = xPos + feederWidth + spacing;
+
+
+        }
+        else if(uSolve[i] == 3){
+            ctx.fillStyle = "#3333FF";
+            ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
+
+            xPos = xPos + feederWidth + spacing;
+
+
+        }
+        
+        
+    }
+
+
+
+// DRAWING UNALLOCATED
     
 }
