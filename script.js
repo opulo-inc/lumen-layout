@@ -34,7 +34,10 @@ const cube = new THREE.Mesh( geometry, material );
 
 // importing the path 
 import assyPath from './asm.glb'
-import feederPath from './feeder.glb'
+import feeder8Path from './feeder.glb'
+import feeder12Path from './feeder.glb'
+import feeder16Path from './feeder.glb'
+import feeder24Path from './feeder.glb'
 
 loader.load( assyPath, function ( gltf )
     {
@@ -67,24 +70,87 @@ window.clearScene = function(){
 }
 
 window.render8 = function(x, z, rotation){
-    loader.load( feederPath, function ( gltf )
-    {
-        var part = gltf.scene;
-        part.scale.set(.1, .1, .1);
-        part.position.y = -2;
-        part.position.z = z;
-        part.position.x = x;
-        //this is to make them upright
-        part.rotation.x = 0;
-        //this is to flip them facing the right direction
-        part.rotation.y = rotation;
-        
-        scene.add( part );
-        deletables.push(part);
-    }, undefined, function ( error ) {
-        console.error( error );
-    }
-);
+    loader.load( feeder8Path, function ( gltf )
+        {
+            var part = gltf.scene;
+            part.scale.set(.1, .1, .1);
+            part.position.y = -2;
+            part.position.z = z;
+            part.position.x = x;
+            //this is to make them upright
+            part.rotation.x = 0;
+            //this is to flip them facing the right direction
+            part.rotation.y = rotation;
+            
+            scene.add( part );
+            deletables.push(part);
+        }, undefined, function ( error ) {
+            console.error( error );
+        }
+    );
+}
+
+window.render12 = function(x, z, rotation){
+    loader.load( feeder12Path, function ( gltf )
+        {
+            var part = gltf.scene;
+            part.scale.set(.1, .1, .1);
+            part.position.y = -2;
+            part.position.z = z;
+            part.position.x = x;
+            //this is to make them upright
+            part.rotation.x = 0;
+            //this is to flip them facing the right direction
+            part.rotation.y = rotation;
+            
+            scene.add( part );
+            deletables.push(part);
+        }, undefined, function ( error ) {
+            console.error( error );
+        }
+    );
+}
+
+window.render16 = function(x, z, rotation){
+    loader.load( feeder16Path, function ( gltf )
+        {
+            var part = gltf.scene;
+            part.scale.set(.1, .1, .1);
+            part.position.y = -2;
+            part.position.z = z;
+            part.position.x = x;
+            //this is to make them upright
+            part.rotation.x = 0;
+            //this is to flip them facing the right direction
+            part.rotation.y = rotation;
+            
+            scene.add( part );
+            deletables.push(part);
+        }, undefined, function ( error ) {
+            console.error( error );
+        }
+    );
+}
+
+window.render24 = function(x, z, rotation){
+    loader.load( feeder24Path, function ( gltf )
+        {
+            var part = gltf.scene;
+            part.scale.set(.1, .1, .1);
+            part.position.y = -2;
+            part.position.z = z;
+            part.position.x = x;
+            //this is to make them upright
+            part.rotation.x = 0;
+            //this is to flip them facing the right direction
+            part.rotation.y = rotation;
+            
+            scene.add( part );
+            deletables.push(part);
+        }, undefined, function ( error ) {
+            console.error( error );
+        }
+    );
 }
 
 window.addFeeders = function(slotSolve){
@@ -118,23 +184,20 @@ window.addFeeders = function(slotSolve){
         }
         // if a 12mm feeder
         else if(slotSolve[i] == 1){
-            ctx.fillStyle = "#FF3333";
-            ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
+            render12(xPos, zPos, rotation)
 
             xPos = xPos + feederWidth + spacing;
 
         }
         else if(slotSolve[i] == 2){
-            ctx.fillStyle = "#33FF33";
-            ctx.fillRect(xPos, yPos, (feederWidth*2)+spacing, feederHeight);
+            render16(xPos, zPos, rotation)
 
             xPos = xPos + feederWidth*2 + spacing*2;
 
 
         }
         else if(slotSolve[i] == 3){
-            ctx.fillStyle = "#3333FF";
-            ctx.fillRect(xPos, yPos, (feederWidth*2)+spacing, feederHeight);
+            render24(xPos, zPos, rotation)
 
             xPos = xPos + feederWidth*2 + spacing*2;
 
