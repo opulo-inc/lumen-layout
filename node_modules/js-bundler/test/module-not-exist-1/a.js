@@ -1,0 +1,2 @@
+require("abcde");
+require("./sss");

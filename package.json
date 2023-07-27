@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "dependencies": {
+    "three": "^0.154.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.154.0",
+    "site": "^2.3.1",
+    "vite": "^4.4.4"
+  }
+}
