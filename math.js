@@ -370,13 +370,21 @@ window.calculate = function () {
         if (isNaN(occurrences['2'])) occurrences['2'] = 0;
         if (isNaN(occurrences['3'])) occurrences['3'] = 0;
 
+        var lumenID = "40225822965947";
+        var feeder8mmID = "44544437256379";
+        var checkout = "https://index-machines.myshopify.com/cart/";
+        checkout = checkout + lumenID + ":1,";
+        checkout = checkout + feeder8mmID + ":" + Math.ceil(occurrences['0'] / 5);
+
         var order = document.getElementById("order");
         order.innerHTML="<h3>Result</h3><p><a href='https://opulo.io/products/lumenpnp'>LumenPnP</a>: 1</p><p><a href='https://opulo.io/products/8mm-feeder'>8mm 5packs</a>: "
             +  Math.ceil(occurrences['0'] / 5) + "</p><p>12mm 5packs: " 
             +  Math.ceil(occurrences['1'] / 5) + "</p><p>16mm 5packs: " 
             +  Math.ceil(occurrences['2'] / 5) + "</p><p>24mm 5packs: " 
-            +  Math.ceil(occurrences['3'] / 5) + "</p>";        
-        
+            +  Math.ceil(occurrences['3'] / 5) + "</p><br>"
+            + "<a href='" + checkout + "'><button>Add to Cart</button></a>"
+            ;      
+            
     }
     
 }

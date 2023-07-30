@@ -33,6 +33,7 @@ button {
     border-radius:10px;
     background-color: #DAA520;
     margin: auto;
+    font-weight: bold;
 }
 
 button:hover {
