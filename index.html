@@ -12,31 +12,74 @@
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-  <script type="module" crossorigin src="./assets/index-71eeb88b.js"></script>
-  <link rel="stylesheet" href="./assets/index-1f320acb.css">
+  <script type="module" crossorigin src="./assets/index-e217de74.js"></script>
+  <link rel="stylesheet" href="./assets/index-7f1cab6c.css">
 </head>
 <body>
   <div id="output"></div>
   <div id="menu">
-    <h1>Layout</h1>
-    <p>8mm Tape Qty Total</p>
-    <input type="number" id="8qty"><br>
-    <p>8mm Tape Qty Priority</p>
-    <input type="number" id="8qtyPriority"><br>
-    <p>12mm Tape Qty Total</p>
-    <input type="number" id="12qty"><br>
-    <p>12mm Tape Qty Priority</p>
-    <input type="number" id="12qtyPriority"><br>
-    <p>16mm Tape Qty Total</p>
-    <input type="number" id="16qty"><br>
-    <p>16mm Tape Qty Priority</p>
-    <input type="number" id="16qtyPriority"><br>
-    <p>24mm Tape Qty Total</p>
-    <input type="number" id="24qty"><br>
-    <p>24mm Tape Qty Priority</p>
-    <input type="number" id="24qtyPriority"><br>
-    <button onclick="calculate();">Calculate</button>
+    <h1>LumenPnP Config Tool</h1>
+    <p>Enter the number of unique parts your job requires for each tape width. Optionally, select how many of these are priority to be automated (parts with many instances per board).</p>
+    <br >
+    <div class="row">
+      <div class="col-left">
+        <h3>8mm Tape Total</h3>
+        <input type="number" value="0" id="8qty"><br>
+      </div>
+      <div class="col-right">
+        <h3>8mm Priority</h3>
+        <input type="range" min="0" max="0" value="0" class="slider" id="8qtyPriority">
+        <div id="prio8out"></div>
+      </div>
+    </div>
     
+    <br>
+
+    <div class="row">
+      <div class="col-left">
+        <h3>12mm Tape Total</h3>
+        <input type="number" value="0" id="12qty"><br>
+      </div>
+      <div class="col-right">
+        <h3>12mm Priority</h3>
+        <input type="range" min="0" max="0" value="0" class="slider" id="12qtyPriority">
+        <div id="prio12out"></div>
+      </div>
+    </div>
+
+    <br >
+
+    <div class="row">
+      <div class="col-left">
+        <h3>16mm Tape Total</h3>
+        <input type="number" value="0" id="16qty"><br>
+      </div>
+      <div class="col-right">
+        <h3>16mm Priority</h3>
+        <input type="range" min="0" max="0" value="0" class="slider" id="16qtyPriority">
+        <div id="prio16out"></div>
+      </div>
+    </div>
+
+    <br >
+
+    <div class="row">
+      <div class="col-left">
+        <h3>24mm Tape Total</h3>
+        <input type="number" value="0" id="24qty"><br>
+      </div>
+      <div class="col-right">
+        <h3>24mm Priority</h3>
+      <input type="range" min="0" max="0" value="0" class="slider" id="24qtyPriority">
+      <div id="prio24out"></div>
+      </div>
+    </div>
+
+    <br>
+    
+    <button onclick="calculate();">Calculate</button>
+    <br><br>
+    <div id="order"></div>
   </div>
 </body>
 </html>
