@@ -32,6 +32,75 @@ const material = new THREE.MeshBasicMaterial( { color: 0xDAA520 } );
 const cube = new THREE.Mesh( geometry, material );
 //scene.add( cube );
 
+var qty8 = document.getElementById("8qty");
+var prio8 = document.getElementById("8qtyPriority");
+var prio8out = document.getElementById("prio8out");
+
+prio8out.innerHTML = prio8.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+prio8.oninput = function() {
+  prio8out.innerHTML = this.value;
+}
+
+qty8.oninput = function() {
+    prio8.max = this.value;
+    prio8.value = 0;
+    prio8out.innerHTML = prio8.value;
+}
+
+var qty12 = document.getElementById("12qty");
+var prio12 = document.getElementById("12qtyPriority");
+var prio12out = document.getElementById("prio12out");
+
+prio12out.innerHTML = prio12.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+prio12.oninput = function() {
+  prio12out.innerHTML = this.value;
+}
+
+qty12.oninput = function() {
+    prio12.max = this.value;
+    prio12.value = 0;
+    prio12out.innerHTML = prio12.value;
+}
+
+var qty16 = document.getElementById("16qty");
+var prio16 = document.getElementById("16qtyPriority");
+var prio16out = document.getElementById("prio16out");
+
+prio16out.innerHTML = prio16.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+prio16.oninput = function() {
+  prio16out.innerHTML = this.value;
+}
+
+qty16.oninput = function() {
+    prio16.max = this.value;
+    prio16.value = 0;
+    prio16out.innerHTML = prio16.value;
+}
+
+var qty24 = document.getElementById("24qty");
+var prio24 = document.getElementById("24qtyPriority");
+var prio24out = document.getElementById("prio24out");
+
+prio24out.innerHTML = prio24.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+prio24.oninput = function() {
+  prio24out.innerHTML = this.value;
+}
+
+qty24.oninput = function() {
+    prio24.max = this.value;
+    prio24.value = 0;
+    prio24out.innerHTML = prio24.value;
+}
+
+
 // importing the path 
 import assyPath from './asm.glb'
 import feeder8Path from './feeder.glb'

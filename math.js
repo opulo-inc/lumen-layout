@@ -98,7 +98,7 @@ window.calculate = function () {
 
     // adding leftover prio to non-prio
     for (let i = 0; i<priority.length; i++){
-        nonPriority[i] = nonPriority[i] + priority[i];
+        nonPriority[i] = parseInt(nonPriority[i]) + parseInt(priority[i]);
     }
 
     console.log("non-prio after adding remaining prio: " + nonPriority);
@@ -352,6 +352,31 @@ window.calculate = function () {
     if(true){
         window.addFeeders(slotSolve);
 
+    }
+
+
+// WRITING ORDER
+    if(true){
+        var occurrences = { };
+        for (var i = 0, j = slotSolve.length; i < j; i++) {
+            occurrences[slotSolve[i]] = (occurrences[slotSolve[i]] || 0) + 1;
+        }
+
+        console.log(occurrences);
+        console.log(occurrences['0']);
+
+        if (isNaN(occurrences['0'])) occurrences['0'] = 0;
+        if (isNaN(occurrences['1'])) occurrences['1'] = 0;
+        if (isNaN(occurrences['2'])) occurrences['2'] = 0;
+        if (isNaN(occurrences['3'])) occurrences['3'] = 0;
+
+        var order = document.getElementById("order");
+        order.innerHTML="<h3>Result</h3><p><a href='https://opulo.io/products/lumenpnp'>LumenPnP</a>: 1</p><p><a href='https://opulo.io/products/8mm-feeder'>8mm 5packs</a>: "
+            +  Math.ceil(occurrences['0'] / 5) + "</p><p>12mm 5packs: " 
+            +  Math.ceil(occurrences['1'] / 5) + "</p><p>16mm 5packs: " 
+            +  Math.ceil(occurrences['2'] / 5) + "</p><p>24mm 5packs: " 
+            +  Math.ceil(occurrences['3'] / 5) + "</p>";        
+        
     }
     
 }
