@@ -24,7 +24,7 @@ const light1 = new THREE.AmbientLight( 0xFFFFFF, 3 ); // soft white light
 scene.add( light1 );
 
 const light2 = new THREE.SpotLight()
-light2.position.set(10, 10, 50)
+light2.position.set(10, 20, 50)
 scene.add(light2)
 
 const light3 = new THREE.SpotLight()
