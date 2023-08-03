@@ -20,12 +20,20 @@ document.getElementById('output').appendChild( renderer.domElement );
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 
-const light1 = new THREE.AmbientLight( 0xFFFFFF ); // soft white light
+const light1 = new THREE.AmbientLight( 0xFFFFFF, 3 ); // soft white light
 scene.add( light1 );
 
 const light2 = new THREE.SpotLight()
-light2.position.set(5, 5, 5)
+light2.position.set(10, 10, 50)
 scene.add(light2)
+
+const light3 = new THREE.SpotLight()
+light3.position.set(-10, -40, -10)
+scene.add(light3)
+
+const light4 = new THREE.SpotLight()
+light4.position.set(10, 35, -50)
+scene.add(light4)
 
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( { color: 0xDAA520 } );
@@ -108,13 +116,14 @@ import feeder12Path from './feeder.glb'
 import feeder16Path from './feeder.glb'
 import feeder24Path from './feeder.glb'
 
+//load lumen
 loader.load( assyPath, function ( gltf )
     {
         var part = gltf.scene;
-        part.scale.set(.1, .1, .1);
-        part.position.y = -3;
-        part.position.x = -20;
-        part.rotation.x = -1.57;
+        //part.scale.set(.1, .1, .1);
+        part.position.y = 0; //-3
+        part.position.x = -20; //-20
+        part.rotation.x = 0;
         
         scene.add( part );
     }, undefined, function ( error ) {
@@ -143,7 +152,7 @@ window.render8 = function(x, z, rotation){
         {
             var part = gltf.scene;
             part.scale.set(.1, .1, .1);
-            part.position.y = -2;
+            part.position.y = 1;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -164,7 +173,7 @@ window.render12 = function(x, z, rotation){
         {
             var part = gltf.scene;
             part.scale.set(.1, .1, .1);
-            part.position.y = -2;
+            part.position.y = 0;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -185,7 +194,7 @@ window.render16 = function(x, z, rotation){
         {
             var part = gltf.scene;
             part.scale.set(.1, .1, .1);
-            part.position.y = -2;
+            part.position.y = 0;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -206,7 +215,7 @@ window.render24 = function(x, z, rotation){
         {
             var part = gltf.scene;
             part.scale.set(.1, .1, .1);
-            part.position.y = -2;
+            part.position.y = 0;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
