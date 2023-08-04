@@ -111,6 +111,7 @@ qty24.oninput = function() {
 
 // importing the path 
 import assyPath from './asm.glb'
+import slotPath from './slots.glb'
 import feeder8Path from './feeder.glb'
 import feeder12Path from './feeder.glb'
 import feeder16Path from './feeder.glb'
@@ -124,6 +125,21 @@ loader.load( assyPath, function ( gltf )
         part.position.y = 0; //-3
         part.position.x = -20; //-20
         part.rotation.x = 0;
+        
+        scene.add( part );
+    }, undefined, function ( error ) {
+        console.error( error );
+    }
+);
+
+//load slots
+loader.load( slotPath, function ( gltf )
+    {
+        var part = gltf.scene;
+        //part.scale.set(.1, .1, .1);
+        part.position.y = 0; //-3
+        part.position.x = -20; //-20
+        part.rotation.x = -1.5708;
         
         scene.add( part );
     }, undefined, function ( error ) {
