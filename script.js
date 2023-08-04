@@ -112,10 +112,10 @@ qty24.oninput = function() {
 // importing the path 
 import assyPath from './asm.glb'
 import slotPath from './slots.glb'
-import feeder8Path from './feeder.glb'
-import feeder12Path from './feeder.glb'
-import feeder16Path from './feeder.glb'
-import feeder24Path from './feeder.glb'
+import feeder8Path from './8mm-feeder.glb'
+import feeder12Path from './8mm-feeder.glb'
+import feeder16Path from './8mm-feeder.glb'
+import feeder24Path from './8mm-feeder.glb'
 
 //load lumen
 loader.load( assyPath, function ( gltf )
@@ -167,8 +167,8 @@ window.render8 = function(x, z, rotation){
     loader.load( feeder8Path, function ( gltf )
         {
             var part = gltf.scene;
-            part.scale.set(.1, .1, .1);
-            part.position.y = 1;
+            //part.scale.set(.1, .1, .1);
+            part.position.y = 0;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -188,8 +188,8 @@ window.render12 = function(x, z, rotation){
     loader.load( feeder12Path, function ( gltf )
         {
             var part = gltf.scene;
-            part.scale.set(.1, .1, .1);
-            part.position.y = 1;
+            //part.scale.set(.1, .1, .1);
+            part.position.y = 0;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -209,8 +209,8 @@ window.render16 = function(x, z, rotation){
     loader.load( feeder16Path, function ( gltf )
         {
             var part = gltf.scene;
-            part.scale.set(.1, .1, .1);
-            part.position.y = 1;
+            //part.scale.set(.1, .1, .1);
+            part.position.y = 0;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -230,8 +230,8 @@ window.render24 = function(x, z, rotation){
     loader.load( feeder24Path, function ( gltf )
         {
             var part = gltf.scene;
-            part.scale.set(.1, .1, .1);
-            part.position.y = 1;
+            //part.scale.set(.1, .1, .1);
+            part.position.y = 0;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -254,19 +254,19 @@ window.addFeeders = function(slotSolve){
 
 
     //this is how far over the first slot is mounted, effectively
-    var startingX = -8;
+    var startingX = -20;
 
     var xPos = startingX;
-    var zPos = 1;
+    var zPos = 0;
     var feederWidth = 1.5;
-    var spacing = 0.02;
-    var rotation = 1.57;
+    var spacing = 0.06;
+    var rotation = 0;
 
     for(let i = 0; i < slotSolve.length; i++){
         if(i == 25){
-            zPos = -44;
-            xPos = startingX;
-            rotation = -1.57;
+            zPos = -43;
+            xPos = 1.7;
+            rotation = 3.14159;
         }
 
         //if an 8mm feeder
