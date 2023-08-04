@@ -173,7 +173,7 @@ window.render12 = function(x, z, rotation){
         {
             var part = gltf.scene;
             part.scale.set(.1, .1, .1);
-            part.position.y = 0;
+            part.position.y = 1;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -194,7 +194,7 @@ window.render16 = function(x, z, rotation){
         {
             var part = gltf.scene;
             part.scale.set(.1, .1, .1);
-            part.position.y = 0;
+            part.position.y = 1;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
@@ -215,7 +215,7 @@ window.render24 = function(x, z, rotation){
         {
             var part = gltf.scene;
             part.scale.set(.1, .1, .1);
-            part.position.y = 0;
+            part.position.y = 1;
             part.position.z = z;
             part.position.x = x;
             //this is to make them upright
