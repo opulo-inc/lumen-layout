@@ -2,8 +2,16 @@
 <html>
 <head>
     <title>LumenPnP Config Tool</title>
-    <link rel="stylesheet" href="style.css">
+    
     <script src="script.js" type="module"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="style.css">
+
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -15,21 +23,23 @@
 </head>
 <body>
   <div id="output"></div>
-  <div id="menu">
-    <h1>LumenPnP Config Tool</h1>
-    <p>Enter the number of unique parts your job requires for each tape width. Optionally, select how many of these are priority to be automated (parts with many instances per board).</p>
-    <br >
-    <div class="row">
-      <div class="col-left">
-        <h3>8mm Tape Total</h3>
-        <input type="number" value="0" id="8qty"><br>
+    <div id="background-pane">
+      <div id="menu">
+      <h1>LumenPnP Config Tool</h1>
+      <p>Enter the number of unique parts your job requires for each tape width. Optionally, select how many of these are priority to be automated (parts with many instances per board).</p>
+      <br >
+      <div class="row">
+        <div class="col-left">
+          <h3>8mm Tape Total</h3>
+          <input type="number" value="0" id="8qty"><br>
+        </div>
+        <div class="col-right">
+          <h3>8mm Priority</h3>
+          <input type="range" min="0" max="0" value="0" class="slider" id="8qtyPriority">
+          <div class="prioOut" id="prio8out"></div>
+        </div>
       </div>
-      <div class="col-right">
-        <h3>8mm Priority</h3>
-        <input type="range" min="0" max="0" value="0" class="slider" id="8qtyPriority">
-        <div id="prio8out"></div>
-      </div>
-    </div>
+    
     
     <br>
 
@@ -41,7 +51,7 @@
       <div class="col-right">
         <h3>12mm Priority</h3>
         <input type="range" min="0" max="0" value="0" class="slider" id="12qtyPriority">
-        <div id="prio12out"></div>
+        <div class="prioOut" id="prio12out"></div>
       </div>
     </div>
 
@@ -55,7 +65,7 @@
       <div class="col-right">
         <h3>16mm Priority</h3>
         <input type="range" min="0" max="0" value="0" class="slider" id="16qtyPriority">
-        <div id="prio16out"></div>
+        <div class="prioOut" id="prio16out"></div>
       </div>
     </div>
 
@@ -66,18 +76,46 @@
         <h3>24mm Tape Total</h3>
         <input type="number" value="0" id="24qty"><br>
       </div>
+
       <div class="col-right">
         <h3>24mm Priority</h3>
-      <input type="range" min="0" max="0" value="0" class="slider" id="24qtyPriority">
-      <div id="prio24out"></div>
+        <input type="range" min="0" max="0" value="0" class="slider" id="24qtyPriority">
+        <div class="prioOut" id="prio24out"></div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-left">
+        <h3>32mm Tape Total</h3>
+        <input type="number" value="0" id="32qty"><br>
+      </div>
+
+      <div class="col-right">
+        <h3>32mm Priority</h3>
+        <input type="range" min="0" max="0" value="0" class="slider" id="32qtyPriority">
+        <div class="prioOut" id="prio32out"></div>
       </div>
     </div>
 
     <br>
     
-    <button onclick="calculate();">Calculate</button>
-    <br><br>
+    <div id="button-wrapper">
+      <button onclick="calculate();">Calculate</button>
+    </div>
+
     <div id="order"></div>
+
+    
+    </div>
+
+    <div id="info">
+      Opulo 2023 - opulo.io
+    </div>
+
+    </div>
+  
   </div>
 </body>
 </html>

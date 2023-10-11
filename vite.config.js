@@ -4,7 +4,6 @@ export default {
     base: './',
     assetsInclude: ['**/*.glb']
 }
-
 // module.exports = {
 //     root: './',
 //     build: {

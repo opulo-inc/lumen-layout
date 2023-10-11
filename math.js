@@ -32,14 +32,17 @@ window.calculate = function () {
     var qty12 = document.getElementById('12qty').value;
     var qty16 = document.getElementById('16qty').value;
     var qty24 = document.getElementById('24qty').value;
+    var qty32 = document.getElementById('32qty').value;
 
     var qty8P = document.getElementById('8qtyPriority').value;
     var qty12P = document.getElementById('12qtyPriority').value;
     var qty16P = document.getElementById('16qtyPriority').value;
     var qty24P = document.getElementById('24qtyPriority').value;
+    var qty32P = document.getElementById('32qtyPriority').value;
 
-    var priority = [qty8P, qty12P, qty16P, qty24P];
-    var nonPriority =[qty8 - qty8P, qty12 - qty12P, qty16 - qty16P, qty24 - qty24P];
+    //var priority = [qty8P, qty12P, qty16P, qty24P];
+    var priority = [qty8P, qty12P, qty16P, qty24P, qty32P];
+    var nonPriority =[qty8 - qty8P, qty12 - qty12P, qty16 - qty16P, qty24 - qty24P, qty32 - qty32P];
 
     //var uniquePartCount = qty8 + qty12 + qty16 + qty24; 
     
@@ -49,8 +52,11 @@ window.calculate = function () {
 
     console.log(priority);
 
-    // first prioritized feeders
-    for (let width = 0; width<priority.length; width++){
+    // this determines which widths are supported for powered feeders
+    var supportedPoweredIndex = 2;
+
+    // first prioritized feeders, limiting just to 8 and 24 for powered
+    for (let width = 0; width<supportedPoweredIndex; width++){
         // if the feeder width type we're on only takes up one slot
         console.log("processing feeder width " + width);
         if (width < 2){
@@ -106,7 +112,7 @@ window.calculate = function () {
     // if slots are NOT filled, try to fill
     if(slotIndex < slotCount){
         //redo filling but with nonPrio
-        for (let width = 0; width<nonPriority.length; width++){
+        for (let width = 0; width<supportedPoweredIndex; width++){
             // if the feeder width type we're on only takes up one slot
             console.log("processing feeder width " + width);
             if (width < 2){
@@ -156,8 +162,8 @@ window.calculate = function () {
 
     // fill remaining into strips
     // ok, so we'll need a key of some sort deciding how many tapes of each width fit into what's effectively 1u of plate space
-    // so, for a given 38mm 1u spacing, we can fit one 24mm, two 16, three 12, and four 8.
-    // knowing how many U are available, we start assinging non-pro feeders to trays.
+    // so, for a given 45mm 1u spacing, we can fit one 24mm, two 16, three 12, and three 8.
+    // knowing how many U are available, we start assigning non-pro feeders to trays.
     // the trick is that before we can assign four 8mm tapes to a U, we need to assign an 8mm feeder to a U.
     // if there are only 3 8mm remaining, we're nuking 1/4 of a U.
     // we should optimize for how many unique feeders we can fit in each U.
@@ -166,7 +172,7 @@ window.calculate = function () {
 
     // we start with 8 because it's the most efficient at reducing total unique part count
 
-    var partsPerU = [4, 3, 2, 1];
+    var partsPerU = [3, 3, 2, 1, 1];
     var uIndex = 0;
 
     // for each tape width type
@@ -232,160 +238,101 @@ window.calculate = function () {
     console.log("remaining nonprio: " + nonPriority)
 
 
-// DRAWING CANVAS FEEDERS
-    if(false){
-
-        //draw on canvas
-        var c = document.getElementById("canvas1");
-        var ctx = c.getContext("2d");
-
-        //clearing canvas
-        ctx.fillStyle = "#EEE";
-        ctx.fillRect(0, 0, 410, 400);
-
-        var startingX = 6;
-
-        var xPos = startingX;
-        var yPos = 333;
-        var feederWidth = 14;
-        var feederHeight = 60;
-        var spacing = 2;
-
-
-        for(let i = 0; i < slotSolve.length; i++){
-            if(i == 25){
-                yPos = 6;
-                xPos = startingX;
-            }
-
-            //if an 8mm feeder
-            if(slotSolve[i] == 0){
-                ctx.fillStyle = "#DAA520";
-                ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
-
-                xPos = xPos + feederWidth + spacing;
-
-
-            }
-            else if(slotSolve[i] == 1){
-                ctx.fillStyle = "#FF3333";
-                ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
-
-                xPos = xPos + feederWidth + spacing;
-
-            }
-            else if(slotSolve[i] == 2){
-                ctx.fillStyle = "#33FF33";
-                ctx.fillRect(xPos, yPos, (feederWidth*2)+spacing, feederHeight);
-
-                xPos = xPos + feederWidth*2 + spacing*2;
-
-
-            }
-            else if(slotSolve[i] == 3){
-                ctx.fillStyle = "#3333FF";
-                ctx.fillRect(xPos, yPos, (feederWidth*2)+spacing, feederHeight);
-
-                xPos = xPos + feederWidth*2 + spacing*2;
-
-
-            }
-            
-            
-        }
-
-    // DRAWING CANVAS STRIPS
-
-        var xPos = startingX;
-        var yPos = 200;
-        var feederWidth = 30;
-        var feederHeight = 50;
-        var spacing = 2;
-
-        for(let i = 0; i <= uSolve.length; i++){
-
-        // not sure if we'll do a second row    
-            // if(i == 25){
-            //     yPos = 6;
-            //     xPos = startingX;
-            // }
-
-            //if an 8mm feeder
-            if(uSolve[i] == 0){
-                ctx.fillStyle = "#DAA520";
-                ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
-
-                xPos = xPos + feederWidth + spacing;
-
-
-            }
-            else if(uSolve[i] == 1){
-                ctx.fillStyle = "#FF3333";
-                ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
-
-                xPos = xPos + feederWidth + spacing;
-
-            }
-            else if(uSolve[i] == 2){
-                ctx.fillStyle = "#33FF33";
-                ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
-
-                xPos = xPos + feederWidth + spacing;
-
-
-            }
-            else if(uSolve[i] == 3){
-                ctx.fillStyle = "#3333FF";
-                ctx.fillRect(xPos, yPos, feederWidth, feederHeight);
-
-                xPos = xPos + feederWidth + spacing;
-
-
-            }
-            
-            
-        }
-    }
-
 // DRAWING THREEJS
 
     if(true){
         window.addFeeders(slotSolve);
+        window.addStrips(uSolve);
 
     }
 
 
 // WRITING ORDER
     if(true){
-        var occurrences = { };
+
+        // finding powered feeder occurances
+        var poweredOccurrences = { };
         for (var i = 0, j = slotSolve.length; i < j; i++) {
-            occurrences[slotSolve[i]] = (occurrences[slotSolve[i]] || 0) + 1;
+            poweredOccurrences[slotSolve[i]] = (poweredOccurrences[slotSolve[i]] || 0) + 1;
         }
 
-        console.log(occurrences);
-        console.log(occurrences['0']);
+        console.log(poweredOccurrences);
+        console.log(poweredOccurrences['0']);
 
-        if (isNaN(occurrences['0'])) occurrences['0'] = 0;
-        if (isNaN(occurrences['1'])) occurrences['1'] = 0;
-        if (isNaN(occurrences['2'])) occurrences['2'] = 0;
-        if (isNaN(occurrences['3'])) occurrences['3'] = 0;
+        if (isNaN(poweredOccurrences['0'])) poweredOccurrences['0'] = 0;
+        if (isNaN(poweredOccurrences['1'])) poweredOccurrences['1'] = 0;
+        if (isNaN(poweredOccurrences['2'])) poweredOccurrences['2'] = 0;
+        if (isNaN(poweredOccurrences['3'])) poweredOccurrences['3'] = 0;
+
+        // finding strip feeder occurances
+
+        var stripOccurrences = { };
+        for (var i = 0, j = uSolve.length; i < j; i++) {
+            stripOccurrences[uSolve[i]] = (stripOccurrences[uSolve[i]] || 0) + 1;
+        }
+
+        console.log(stripOccurrences);
+        console.log(stripOccurrences['0']);
+
+        if (isNaN(stripOccurrences['0'])) stripOccurrences['0'] = 0;
+        if (isNaN(stripOccurrences['1'])) stripOccurrences['1'] = 0;
+        if (isNaN(stripOccurrences['2'])) stripOccurrences['2'] = 0;
+        if (isNaN(stripOccurrences['3'])) stripOccurrences['3'] = 0;
+        if (isNaN(stripOccurrences['4'])) stripOccurrences['4'] = 0;
+
+        // generating new html
 
         var lumenID = "40225822965947";
-        var harnessID = "44547065741499";
-        var feeder8mmID = "44544437256379";
+
+        var feederURLbase = "https://www.opulo.io/products/feeder?variant=";
+        var feeder8mmID = "44790609150139";
+        var feeder12mmID = "44790609182907";
+
+
+        var stripURLbase= "https://www.opulo.io/products/lumenpnp-strip-feeder?variant=";
+        var strip8ID = "44789644132539";
+        var strip12ID = "44789644198075";
+        var strip16ID = "44789644230843";
+        var strip24ID = "44789644263611";
+        var strip32ID = "44789644296379";
+        var stripAdjID = "44789644329147";
+
         var checkout = "https://index-machines.myshopify.com/cart/";
         checkout = checkout + lumenID + ":1,";
-        checkout = checkout + harnessID + ":1,";
-        checkout = checkout + feeder8mmID + ":" + Math.ceil(occurrences['0'] / 5);
+        checkout = checkout + feeder8mmID + ":" + Math.ceil(poweredOccurrences['0'] / 5) + ",";
+        checkout = checkout + feeder12mmID + ":" + Math.ceil(poweredOccurrences['1'] / 5) + ",";
+
+        checkout = checkout + strip8ID + ":" + stripOccurrences['0'] + ",";
+        checkout = checkout + strip12ID + ":" + stripOccurrences['1'] + ",";
+        checkout = checkout + strip16ID + ":" + stripOccurrences['2'] + ",";
+        checkout = checkout + strip24ID + ":" + stripOccurrences['3'] + ",";
+        checkout = checkout + strip32ID + ":" + stripOccurrences['4'];
 
         var order = document.getElementById("order");
-        order.innerHTML="<h3>Result</h3><p><a target='_blank' href='https://opulo.io/products/lumenpnp'>LumenPnP</a>: 1</p><p><a target='_blank' href='https://opulo.io/products/8mm-feeder'>8mm 5packs</a>: "
-            +  Math.ceil(occurrences['0'] / 5) + "</p><p>12mm 5packs: " 
-            +  Math.ceil(occurrences['1'] / 5) + "</p><p>16mm 5packs: " 
-            +  Math.ceil(occurrences['2'] / 5) + "</p><p>24mm 5packs: " 
-            +  Math.ceil(occurrences['3'] / 5) + "</p><br>"
-            + "<a target='_blank' href='" + checkout + "'><button>Add to Cart</button></a>"
-            ;      
+
+        order.innerHTML=`
+        <div id="powered-result">
+            <h3>Powered Feeders Required</h3>
+            <p><a target='_blank' href='https://www.opulo.io/products/feeder?variant=44790609150139'>8mm 5-Packs</a>: ` + Math.ceil(poweredOccurrences['0'] / 5) + `</p>
+            <p><a target='_blank' href='https://www.opulo.io/products/feeder?variant=44790609182907'>12mm 5-Packs</a>: ` + Math.ceil(poweredOccurrences['1'] / 5) + `</p>
+        </div>
+
+        <div id="strip-result">
+            <h3>Strip Feeders Required</h3>
+            <div id="strip-half-1">
+                <p><a target='_blank' href='` + stripURLbase + strip8ID + `'>8mm</a>: ` + stripOccurrences['0'] + `</p>
+                <p><a target='_blank' href='` + stripURLbase + strip12ID + `'>12mm</a>: ` + stripOccurrences['1'] + `</p>
+                <p><a target='_blank' href='` + stripURLbase + strip16ID + `'>16mm</a>: ` + stripOccurrences['2'] + `</p> 
+            </div>
+            <div id="strip-half-2">
+                <p><a target='_blank' href='` + stripURLbase + strip24ID + `'>24mm</a>: ` + stripOccurrences['3'] + `</p>
+                <p><a target='_blank' href='` + stripURLbase + strip32ID + `'>32mm</a>: ` + stripOccurrences['4'] + `</p> 
+            </div>
+        </div>
+        
+        
+        <a target='_blank' href='` + checkout + `'><button>Add to Cart</button></a>
+        `;      
             
     }
     
