@@ -187,6 +187,7 @@ window.calculate = function () {
                 console.log("current feeder width: " + width);
                 console.log("best allocation of that width: " + Math.min(partsPerU[width], nonPriority[width]));
                 console.log("best allocation of next width: " + Math.min(partsPerU[width+1], nonPriority[width+1]));
+
                 if(Math.min(partsPerU[width], nonPriority[width]) >= Math.min(partsPerU[width+1], nonPriority[width+1])){
                     //if there are U left to allocate
                     if(uIndex < uSolve.length){
@@ -229,6 +230,9 @@ window.calculate = function () {
                     // removing the amount of parts allocated
                     nonPriority[width] = nonPriority[width] - Math.min(partsPerU[width], nonPriority[width]);
                 }
+                else{
+                    break;
+                }
             }
         }
 
@@ -236,6 +240,31 @@ window.calculate = function () {
 
     console.log("final usolve: " + uSolve)
     console.log("remaining nonprio: " + nonPriority)
+
+// NOTIFYING ABOUT PARTS NOT ALLOCATED
+
+    if(nonPriority[0] != 0 || nonPriority[1] != 0 || nonPriority[2] != 0 || nonPriority[3] != 0 || nonPriority[4] != 0 ){
+        // something's not allocated
+        var message = "Not enough space for some tapes:\n";
+
+        if(nonPriority[0] != 0){
+            message = message + "8mm: " + nonPriority[0] + "\n";
+        }
+        if(nonPriority[1] != 0){
+            message = message + "12mm: " + nonPriority[1] + "\n";
+        }
+        if(nonPriority[2] != 0){
+            message = message + "16mm: " + nonPriority[2] + "\n";
+        }
+        if(nonPriority[3] != 0){
+            message = message + "24mm: " + nonPriority[3] + "\n";
+        }
+        if(nonPriority[4] != 0){
+            message = message + "32mm: " + nonPriority[4] + "\n";
+        }
+        alert(message);
+    }
+
 
 
 // DRAWING THREEJS
