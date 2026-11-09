@@ -1,0 +1,10 @@
+import type { Position } from './tree';
+export declare const PI: number;
+export declare const HALF_PI: number;
+export declare const THREE_HALF_PI: number;
+export declare const TWO_PI: number;
+export declare function limitAngle(theta: number): number;
+export declare function rotateQuadrant(theta: number): number;
+export declare function degreesToRadians(degrees: number): number;
+export declare function rotateAndShift(point: Position, shift: Position, degrees?: number): Position;
+export declare function positionsEqual(a: number[], b: number[]): boolean;

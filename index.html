@@ -11,24 +11,23 @@
   <!-- End Google Tag Manager -->
 
     <title>LumenPnP Config Tool</title>
-    
-    <script src="script.js" type="module"></script>
+    <script src="./src/main.js" type="module"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="./style.css">
 
-    <link rel="stylesheet" href="style.css">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
@@ -37,103 +36,128 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <div id="output"></div>
-    <div id="background-pane">
-      <div id="menu">
-      <h1>LumenPnP Config Tool</h1>
-      <p>Enter the number of unique parts your job requires for each tape width. Optionally, select how many of these are priority to be automated (parts with many instances per board).</p>
-      <br >
-      <div class="row">
-        <div class="col-left">
-          <h3>8mm Tape Total</h3>
-          <input type="number" value="0" id="8qty"><br>
+  <aside>
+    <h1>LumenPnP Config Tool</h1>
+    <p class="sub">This tool helps you determine what you need to run your job on a LumenPnP.</p>
+    <ul class="sub">
+      <li>Input the number of parts for each tape width from your BoM.</li>
+      <li>Use a lot of some parts? Set a priority to make sure they're in an auto feeder.</li>
+      <li>Rearrange strip feeders in the machine's work area.</li>
+      <li>Need a custom IC tray? Generate a 3D printable one using our <a href="https://tray.opulo.io/" target="_blank">web tool</a>.</li>
+      <li>Import your Gerber or DXF file to check that everything will fit.</li>
+      <li>Add all needed parts to a cart on the Opulo webstore.</li>
+    </ul>
+
+    <div class="sec">Parts</div>
+
+    <div class="tape">
+      <div class="tape-name">8mm</div>
+      <div>
+        <label for="qty-8">Total</label>
+        <div class="qty-field">
+          <input type="number" min="0" value="0" id="qty-8">
+          <span class="qty-steps">
+            <button type="button" data-step="1" aria-label="Increase total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 5 5 1l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" data-step="-1" aria-label="Decrease total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1 5 5l4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </span>
         </div>
-        <div class="col-right">
-          <h3>8mm Priority</h3>
-          <input type="range" min="0" max="0" value="0" class="slider" id="8qtyPriority">
-          <div class="prioOut" id="prio8out"></div>
+      </div>
+      <div>
+        <label for="prio-8">Priority <span id="prio-8-out"></span></label>
+        <input type="range" min="0" max="0" value="0" id="prio-8">
+      </div>
+    </div>
+
+    <div class="tape">
+      <div class="tape-name">12mm</div>
+      <div>
+        <label for="qty-12">Total</label>
+        <div class="qty-field">
+          <input type="number" min="0" value="0" id="qty-12">
+          <span class="qty-steps">
+            <button type="button" data-step="1" aria-label="Increase total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 5 5 1l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" data-step="-1" aria-label="Decrease total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1 5 5l4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </span>
         </div>
       </div>
-    
-    
-    <br>
-
-    <div class="row">
-      <div class="col-left">
-        <h3>12mm Tape Total</h3>
-        <input type="number" value="0" id="12qty"><br>
-      </div>
-      <div class="col-right">
-        <h3>12mm Priority</h3>
-        <input type="range" min="0" max="0" value="0" class="slider" id="12qtyPriority">
-        <div class="prioOut" id="prio12out"></div>
+      <div>
+        <label for="prio-12">Priority <span id="prio-12-out"></span></label>
+        <input type="range" min="0" max="0" value="0" id="prio-12">
       </div>
     </div>
 
-    <br >
-
-    <div class="row">
-      <div class="col-left">
-        <h3>16mm Tape Total</h3>
-        <input type="number" value="0" id="16qty"><br>
+    <div class="tape">
+      <div class="tape-name">16mm</div>
+      <div>
+        <label for="qty-16">Total</label>
+        <div class="qty-field">
+          <input type="number" min="0" value="0" id="qty-16">
+          <span class="qty-steps">
+            <button type="button" data-step="1" aria-label="Increase total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 5 5 1l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" data-step="-1" aria-label="Decrease total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1 5 5l4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </span>
+        </div>
       </div>
-      <div class="col-right">
-        <h3>16mm Priority</h3>
-        <input type="range" min="0" max="0" value="0" class="slider" id="16qtyPriority">
-        <div class="prioOut" id="prio16out"></div>
-      </div>
-    </div>
-
-    <br >
-
-    <div class="row">
-      <div class="col-left">
-        <h3>24mm Tape Total</h3>
-        <input type="number" value="0" id="24qty"><br>
-      </div>
-
-      <div class="col-right">
-        <h3>24mm Priority</h3>
-        <input type="range" min="0" max="0" value="0" class="slider" id="24qtyPriority">
-        <div class="prioOut" id="prio24out"></div>
+      <div>
+        <label for="prio-16">Priority <span id="prio-16-out"></span></label>
+        <input type="range" min="0" max="0" value="0" id="prio-16">
       </div>
     </div>
 
-    <br>
-
-    <div class="row">
-      <div class="col-left">
-        <h3>32mm Tape Total</h3>
-        <input type="number" value="0" id="32qty"><br>
+    <div class="tape">
+      <div class="tape-name">24mm</div>
+      <div>
+        <label for="qty-24">Total</label>
+        <div class="qty-field">
+          <input type="number" min="0" value="0" id="qty-24">
+          <span class="qty-steps">
+            <button type="button" data-step="1" aria-label="Increase total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 5 5 1l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" data-step="-1" aria-label="Decrease total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1 5 5l4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </span>
+        </div>
       </div>
-
-      <div class="col-right">
-        <h3>32mm Priority</h3>
-        <input type="range" min="0" max="0" value="0" class="slider" id="32qtyPriority">
-        <div class="prioOut" id="prio32out"></div>
+      <div>
+        <label for="prio-24">Priority <span id="prio-24-out"></span></label>
+        <input type="range" min="0" max="0" value="0" id="prio-24">
       </div>
     </div>
 
-    <br>
-    
-    <div id="button-wrapper">
-      <button id="calculate-button" onclick="calculate();">Calculate</button>
+    <div class="tape">
+      <div class="tape-name">32mm</div>
+      <div>
+        <label for="qty-32">Total</label>
+        <div class="qty-field">
+          <input type="number" min="0" value="0" id="qty-32">
+          <span class="qty-steps">
+            <button type="button" data-step="1" aria-label="Increase total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 5 5 1l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" data-step="-1" aria-label="Decrease total"><svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1 5 5l4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </span>
+        </div>
+      </div>
+      <div>
+        <label for="prio-32">Priority <span id="prio-32-out"></span></label>
+        <input type="range" min="0" max="0" value="0" id="prio-32">
+      </div>
     </div>
+
+    <div class="sec">Board</div>
+    <label for="gerber-file">Gerber or DXF</label>
+    <input type="file" id="gerber-file" multiple accept=".zip,.gbr,.ger,.gtl,.gbl,.gts,.gbs,.gto,.gbo,.gtp,.gbp,.gko,.gm1,.gm2,.gm3,.drl,.xln,.dxf">
+    <p class="hint">Import your Gerbers to help with layout and fit checking.</p>
+    <div class="board-buttons">
+      <button type="button" id="rotate-board">Rotate</button>
+      <button type="button" id="clear-board">Clear</button>
+    </div>
+    <p id="gerber-status"></p>
 
     <div id="order"></div>
-
-    
-    </div>
-
-    </div>
-  
-    <a href="https://www.opulo.io/"><div id="info">
-      <img style="width: 120px;" src="opulo-black-alpha.png" />
-    </div></a>
-
-  </div>
-
-  
+  </aside>
+  <div id="divider" title="Drag to resize"></div>
+  <main>
+    <div id="stage"></div>
+    <a id="info" href="https://www.opulo.io/"><img src="./opulo-logo.png" alt="Opulo"></a>
+    <button type="button" id="fit-view">Fit</button>
+  </main>
 
 </body>
 </html>

@@ -1,0 +1,11 @@
+import * as Tree from './tree';
+import type { SizeEnvelope as Box } from './tree';
+export type { SizeEnvelope as Box } from './tree';
+export declare function isEmpty(box: Box): box is [];
+export declare function empty(): Box;
+export declare function add(a: Box, b: Box): Box;
+export declare function sum(boxes: Box[]): Box;
+export declare function fromGraphics(graphics: Tree.ImageGraphic[]): Box;
+export declare function fromGraphic(graphic: Tree.ImageGraphic): Box;
+export declare function fromShape(shape: Tree.Shape): Box;
+export declare function fromPath(segments: Tree.PathSegment[], width?: number): Box;
